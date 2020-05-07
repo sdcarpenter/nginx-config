@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.16-alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "$HTTP_PORT:80"
+      - "443:443"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      - crossridgehoa_nginx:/var/www
+      - crossridgehoa_certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+
+  certbot:
+    depends_on:
+      - nginx
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - crossridgehoa_certbot-etc:/etc/letsencrypt
+      - crossridgehoa_nginx:/var/www/crossridgehoa.org/html
+    command: certonly --webroot --webroot-path=/var/www/crossridgehoa.org/html --email crossridgehoa@gmail.com --agree-tos --no-eff-email --force-renewal -d crossridgehoa.org -d www.crossridgehoa.org
+
+volumes:
+  crossridgehoa_certbot-etc:
+    external: true
+  crossridgehoa_nginx:
+    external: true
+
+networks:
+  app-network:
+    driver: bridge  
