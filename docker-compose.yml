@@ -10,26 +10,34 @@ services:
       - "443:443"
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d
-      - crossridgehoa_nginx:/var/www
-      - crossridgehoa_certbot-etc:/etc/letsencrypt
+      - nginx:/var/www
+      - certbot-etc:/etc/letsencrypt
     networks:
       - app-network
 
-  certbot:
+  certbot-hoa:
     depends_on:
       - nginx
     image: certbot/certbot
-    container_name: certbot
+    container_name: certbot-hoa
     volumes:
-      - crossridgehoa_certbot-etc:/etc/letsencrypt
-      - crossridgehoa_nginx:/var/www/crossridgehoa.org/html
+      - certbot-etc:/etc/letsencrypt
+      - nginx:/var/www 
     command: certonly --webroot --webroot-path=/var/www/crossridgehoa.org/html --email crossridgehoa@gmail.com --agree-tos --no-eff-email --force-renewal -d crossridgehoa.org -d www.crossridgehoa.org
 
+  certbot-scottdcarpenter:
+    depends_on:
+      - nginx
+    image: certbot/certbot
+    container_name: certbot-scottdcarpenter
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - nginx:/var/www 
+    command: certonly --webroot --webroot-path=/var/www/scottdcarpenter.com/html --email sdcarpenter@gmail.com --agree-tos --no-eff-email --staging -d scottdcarpenter.com
+
 volumes:
-  crossridgehoa_certbot-etc:
-    external: true
-  crossridgehoa_nginx:
-    external: true
+  certbot-etc:
+  nginx:
 
 networks:
   app-network:
