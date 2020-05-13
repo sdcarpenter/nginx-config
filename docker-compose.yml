@@ -33,7 +33,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - nginx:/var/www 
-    command: certonly --webroot --webroot-path=/var/www/scottdcarpenter.com/html --email sdcarpenter@gmail.com --agree-tos --no-eff-email --staging -d scottdcarpenter.com
+    command: certonly --webroot --webroot-path=/var/www/scottdcarpenter.com/html --email sdcarpenter@gmail.com --agree-tos --no-eff-email --force-renewal -d scottdcarpenter.com -d www.scottdcarpenter.com -d bingo.scottdcarpenter.com
 
 volumes:
   certbot-etc:
