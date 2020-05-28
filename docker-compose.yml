@@ -13,7 +13,8 @@ services:
       - nginx:/var/www
       - certbot-etc:/etc/letsencrypt
     networks:
-      - app-network
+      - bingo_app-network
+      - crossridgehoa_app-network
 
   certbot-hoa:
     depends_on:
@@ -40,5 +41,7 @@ volumes:
   nginx:
 
 networks:
-  app-network:
-    driver: bridge  
+  bingo_app-network:
+    external: true
+  crossridgehoa_app-network:
+    external: true
