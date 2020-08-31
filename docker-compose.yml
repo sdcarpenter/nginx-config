@@ -15,6 +15,7 @@ services:
     networks:
       - bingo_app-network
       - crossridgehoa_app-network
+      - blog_app-network
 
   certbot-hoa:
     depends_on:
@@ -44,4 +45,6 @@ networks:
   bingo_app-network:
     external: true
   crossridgehoa_app-network:
+    external: true
+  blog_app-network:
     external: true
