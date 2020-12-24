@@ -16,6 +16,7 @@ services:
       - bingo_app-network
       - crossridgehoa_app-network
       - blog_app-network
+      - blazorchat_app-network
 
   certbot-hoa:
     depends_on:
@@ -35,7 +36,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - nginx:/var/www 
-    command: certonly --webroot --webroot-path=/var/www/scottdcarpenter.com/html --email sdcarpenter@gmail.com --agree-tos --no-eff-email --force-renewal -d scottdcarpenter.com -d www.scottdcarpenter.com -d bingo.scottdcarpenter.com -d blog.scottdcarpenter.com
+    command: certonly --webroot --webroot-path=/var/www/scottdcarpenter.com/html --email sdcarpenter@gmail.com --agree-tos --no-eff-email --force-renewal -d scottdcarpenter.com -d www.scottdcarpenter.com -d bingo.scottdcarpenter.com -d blog.scottdcarpenter.com -d blazorchat.scottdcarpenter.com
 
 volumes:
   certbot-etc:
@@ -47,4 +48,6 @@ networks:
   crossridgehoa_app-network:
     external: true
   blog_app-network:
+    external: true
+  blazorchat_app-network:
     external: true
